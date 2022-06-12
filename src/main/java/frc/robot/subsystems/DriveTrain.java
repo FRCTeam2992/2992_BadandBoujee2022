@@ -29,16 +29,20 @@ public class DriveTrain extends SubsystemBase {
     frontLeftMotor = new CANSparkMax(1, MotorType.kBrushless);
     frontLeftMotor.setIdleMode(IdleMode.kBrake);
     frontLeftMotor.setInverted(false);
-
+    
     frontRightMotor = new CANSparkMax(3, MotorType.kBrushless);
     frontRightMotor.setIdleMode(IdleMode.kBrake);
-    frontRightMotor.setInverted(false);
+    frontRightMotor.setInverted(true);
 
     backLeftMotor = new CANSparkMax(2, MotorType.kBrushless);
     backLeftMotor.follow(frontLeftMotor);
+    backLeftMotor.setInverted(false);
+    backLeftMotor.setIdleMode(IdleMode.kBrake);
   
     backRightMotor = new CANSparkMax(4, MotorType.kBrushless);
     backRightMotor.follow(frontRightMotor);
+    backRightMotor.setIdleMode(IdleMode.kBrake);
+    backRightMotor.setInverted(true);
 
 
     gearShifter = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
@@ -65,7 +69,7 @@ public class DriveTrain extends SubsystemBase {
 
     double max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
 
-    if(max > 0){
+    if(max > 1){
       leftSpeed /= max;
       rightSpeed /= max;
     }

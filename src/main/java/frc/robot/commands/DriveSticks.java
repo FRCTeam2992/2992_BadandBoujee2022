@@ -33,16 +33,16 @@ public class DriveSticks extends CommandBase {
     x2 = -Robot.mRobotContainer.controller1.getRawAxis(4);
     y1 = -Robot.mRobotContainer.controller1.getRawAxis(1);
 
-    x2 = Math.pow(x2, 3);
-    y1 = Math.pow(y1, 3);
-
     if (Math.abs(y1) <= Constants.joystickDeadband) {
-      x2 = 0.0;
+      y1 = 0.0;
     }
 
     if (Math.abs(x2) <= Constants.joystickDeadband) {
       x2 = 0.0;
     }
+
+    x2 = Math.pow(x2, 3);
+    y1 = Math.pow(y1, 3);
 
     mDriveTrain.setArcadeSpeed(y1, x2);
   }
