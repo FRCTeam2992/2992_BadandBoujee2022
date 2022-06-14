@@ -7,12 +7,18 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.ChangeShooterSpeed;
+import frc.robot.commands.ClimbSticks;
 import frc.robot.commands.DeployIntake;
 import frc.robot.commands.DriveSticks;
+import frc.robot.commands.StartBallFeed;
+import frc.robot.commands.StartShooter;
 import frc.robot.commands.StopBallFeed;
+import frc.robot.commands.StopClimb;
 import frc.robot.commands.StopIntake;
 import frc.robot.commands.StopShooter;
 import frc.robot.subsystems.BallFeed;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -36,8 +42,10 @@ public class RobotContainer {
   private final Intake mIntake;
   private final Shooter mShooter;
   private final BallFeed mBallFeed;
+  private final Climb mClimb;
 
   public XboxController controller1;
+  public XboxController controller2;
 
   public RobotContainer() {
     // Configure the button bindings
@@ -53,7 +61,11 @@ public class RobotContainer {
     mBallFeed = new BallFeed();
     mBallFeed.setDefaultCommand(new StopBallFeed(mBallFeed));
 
+    mClimb = new Climb();
+    mClimb.setDefaultCommand(new ClimbSticks(mClimb));
+
     controller1 = new XboxController(1);
+    controller2 = new XboxController(2);
 
     configureButtonBindings();
   }
@@ -68,6 +80,20 @@ public class RobotContainer {
 
     SmartDashboard.putData("Deploy Intake", new DeployIntake(mIntake, true));
     SmartDashboard.putData("Retract Intake", new DeployIntake(mIntake, false));
+
+
+    SmartDashboard.putData("Start BallFeed", new StartBallFeed(mBallFeed));
+    SmartDashboard.putData("Stop BallFeed", new StopBallFeed(mBallFeed));
+  
+
+    SmartDashboard.putData("Start Shooter", new StartShooter(mShooter));
+    SmartDashboard.putData("Stop Shooter", new StopShooter(mShooter));
+
+    SmartDashboard.putData("50 Increase Shooter RPM", new ChangeShooterSpeed(mShooter, 50));
+    SmartDashboard.putData("50 Decrease Shooter RPM", new ChangeShooterSpeed(mShooter, -50));
+    SmartDashboard.putData("200 Increase Shooter RPM", new ChangeShooterSpeed(mShooter, 200));
+    SmartDashboard.putData("200 Decrease Shooter RPM", new ChangeShooterSpeed(mShooter, -200));
+
 
   }
 

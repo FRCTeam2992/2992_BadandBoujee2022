@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
 public class DriveSticks extends CommandBase {
@@ -32,6 +33,12 @@ public class DriveSticks extends CommandBase {
     
     x2 = -Robot.mRobotContainer.controller1.getRawAxis(4);
     y1 = -Robot.mRobotContainer.controller1.getRawAxis(1);
+
+    if (Robot.mRobotContainer.controller1.getLeftTriggerAxis() > 0.5){
+      mDriveTrain.setGearState(true);
+    } else {
+      mDriveTrain.setGearState(false);
+    }
 
     if (Math.abs(y1) <= Constants.joystickDeadband) {
       y1 = 0.0;

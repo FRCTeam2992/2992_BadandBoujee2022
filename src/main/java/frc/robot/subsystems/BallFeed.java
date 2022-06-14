@@ -14,7 +14,7 @@ import frc.robot.Constants;
 public class BallFeed extends SubsystemBase {
 
   private VictorSPX feedMotor;
-  private boolean mFeedState;
+  private boolean feedState;
 
   /** Creates a new BallFeed. */
   public BallFeed() {
@@ -30,9 +30,9 @@ public class BallFeed extends SubsystemBase {
   }
 
   public void setFeedMotor(boolean feedState) {
-    mFeedState = feedState;
+    feedState = feedState;
 
-    if (mFeedState){
+    if (feedState){
       feedMotor.set(ControlMode.PercentOutput, Constants.ballFeedSpeed);
     } else{
       feedMotor.set(ControlMode.PercentOutput, 0);
@@ -40,6 +40,6 @@ public class BallFeed extends SubsystemBase {
   }
   
   public boolean getFeedState(){
-    return mFeedState; 
+    return feedState; 
   }
 }

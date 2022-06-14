@@ -18,9 +18,13 @@ public final class Constants {
     public static final double joystickDeadband = 0.1;
 
     //Shooter
-    public static final double defaultMainShooterSpeed = 2500;
+    public static final double highGoalShooterSpeed = 2500;
+    public static final double lowGoalShooterSpeed = 1000;
     public static final double shooterEncoderPulses = 2048;
 
     //Ball Feed
     public static final double ballFeedSpeed = 0.2;
+
+    //Intake
+    public static final double intakeMotorSpeed = 0.2;
 }

@@ -5,28 +5,30 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.BallFeed;
+import frc.robot.Constants;
+import frc.robot.subsystems.Intake;
 
-public class StopBallFeed extends CommandBase {
+public class StartIntake extends CommandBase {
 
-  private BallFeed mBallFeed;
-  /** Creates a new StopBallFeed. */
-  public StopBallFeed(BallFeed subsystem) {
 
-    mBallFeed = subsystem;
+  private Intake mIntake;
+  /** Creates a new StartIntake. */
+  public StartIntake(Intake subsystem) {
+
+    mIntake = subsystem;
+
+    addRequirements(mIntake);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(mBallFeed);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mBallFeed.setFeedMotor(false);
+    mIntake.setIntakeSpeed(Constants.intakeMotorSpeed);
   }
 
   // Called once the command ends or is interrupted.

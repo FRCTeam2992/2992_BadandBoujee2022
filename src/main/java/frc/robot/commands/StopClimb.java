@@ -5,28 +5,29 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.BallFeed;
+import frc.robot.Constants;
+import frc.robot.subsystems.Climb;
 
-public class StopBallFeed extends CommandBase {
+public class StopClimb extends CommandBase {
+  private Climb mClimb;
 
-  private BallFeed mBallFeed;
-  /** Creates a new StopBallFeed. */
-  public StopBallFeed(BallFeed subsystem) {
+  /** Creates a new StopClimb. */
+  public StopClimb(Climb subsystem) {
 
-    mBallFeed = subsystem;
+    mClimb = subsystem;
+    addRequirements(mClimb);
+
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(mBallFeed);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mBallFeed.setFeedMotor(false);
+    mClimb.setClimbSpeed(0.0);
   }
 
   // Called once the command ends or is interrupted.

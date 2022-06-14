@@ -14,7 +14,7 @@ import frc.robot.Constants;
 public class Shooter extends SubsystemBase {
   private TalonFX shooterMotor;
 
-  private double shooterSetRPM = Constants.defaultMainShooterSpeed;
+  private double shooterSetRPM = Constants.highGoalShooterSpeed;
 
   /** Creates a new Shooter. */
   public Shooter() {
@@ -53,8 +53,8 @@ public class Shooter extends SubsystemBase {
     return shooterSetRPM;
   }
 
-  public void setShooterTargetRPM(double mainShooterSetSpeed) {
-    this.shooterSetRPM = mainShooterSetSpeed;
+  public void setShooterTargetRPM(double shooterSetSpeed) {
+    this.shooterSetRPM = shooterSetSpeed;
   }
 
   public boolean atShooterRPM() {
