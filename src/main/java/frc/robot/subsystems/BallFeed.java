@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,12 +14,12 @@ import frc.robot.Constants;
 
 public class BallFeed extends SubsystemBase {
 
-  private VictorSPX feedMotor;
+  private TalonSRX feedMotor;
   private boolean feedState;
 
   /** Creates a new BallFeed. */
   public BallFeed() {
-    feedMotor = new VictorSPX(7);
+    feedMotor = new TalonSRX(7);
     feedMotor.setNeutralMode(NeutralMode.Brake);
     feedMotor.setInverted(false);
 

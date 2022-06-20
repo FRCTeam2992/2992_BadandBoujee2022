@@ -7,14 +7,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.ChangeShooterSpeed;
 import frc.robot.commands.ClimbSticks;
 import frc.robot.commands.DeployIntake;
 import frc.robot.commands.DriveSticks;
+import frc.robot.commands.MoveClimb;
 import frc.robot.commands.StartBallFeed;
 import frc.robot.commands.StartShooter;
 import frc.robot.commands.StopBallFeed;
-import frc.robot.commands.StopClimb;
 import frc.robot.commands.StopIntake;
 import frc.robot.commands.StopShooter;
 import frc.robot.subsystems.BallFeed;
@@ -22,7 +24,6 @@ import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -42,7 +43,7 @@ public class RobotContainer {
   private final Intake mIntake;
   private final Shooter mShooter;
   private final BallFeed mBallFeed;
-  private final Climb mClimb;
+  public final Climb mClimb;
 
   public XboxController controller1;
   public XboxController controller2;
@@ -51,21 +52,26 @@ public class RobotContainer {
     // Configure the button bindings
     mDriveTrain = new DriveTrain();
     mDriveTrain.setDefaultCommand(new DriveSticks(mDriveTrain));
+    SmartDashboard.putData(mDriveTrain);
 
     mIntake = new Intake();
     mIntake.setDefaultCommand(new StopIntake(mIntake));
+    SmartDashboard.putData(mIntake);
 
     mShooter = new Shooter();
     mShooter.setDefaultCommand(new StopShooter(mShooter));
+    SmartDashboard.putData(mShooter);
 
     mBallFeed = new BallFeed();
     mBallFeed.setDefaultCommand(new StopBallFeed(mBallFeed));
+    SmartDashboard.putData(mBallFeed);
 
     mClimb = new Climb();
     mClimb.setDefaultCommand(new ClimbSticks(mClimb));
+    SmartDashboard.putData(mClimb);
 
-    controller1 = new XboxController(1);
-    controller2 = new XboxController(2);
+    controller1 = new XboxController(0);
+    controller2 = new XboxController(1);
 
     configureButtonBindings();
   }
@@ -95,6 +101,14 @@ public class RobotContainer {
     SmartDashboard.putData("200 Decrease Shooter RPM", new ChangeShooterSpeed(mShooter, -200));
 
 
+
+    POVButton climbUPButton = new POVButton(controller1, 0);
+    climbUPButton.whenHeld(new MoveClimb(mClimb, .5), true);
+
+    POVButton climbDownButton = new POVButton(controller1, 90);
+    climbDownButton.whenHeld(new MoveClimb(mClimb, -.5), true);
+
+    
   }
 
   /**

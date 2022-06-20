@@ -22,7 +22,7 @@ public class DriveTrain extends SubsystemBase {
 
   private Solenoid gearShifter;
 
-  private boolean mGearState;
+  private boolean mGearState = false;
   
   /** Creates a new DriveTrain. */
   public DriveTrain() {
@@ -44,6 +44,7 @@ public class DriveTrain extends SubsystemBase {
     backRightMotor.setIdleMode(IdleMode.kBrake);
     backRightMotor.setInverted(true);
 
+    setVoltageRamping(.75);
 
     gearShifter = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
   
@@ -52,6 +53,14 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void setVoltageRamping(double seconds){
+    frontLeftMotor.setOpenLoopRampRate(seconds);
+    frontRightMotor.setOpenLoopRampRate(seconds);
+    backLeftMotor.setOpenLoopRampRate(seconds);
+    backRightMotor.setOpenLoopRampRate(seconds);
+
   }
 
   public void setTankSpeed(double leftSpeed, double rightSpeed){

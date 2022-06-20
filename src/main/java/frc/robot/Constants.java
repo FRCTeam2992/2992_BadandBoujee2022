@@ -16,6 +16,7 @@ public final class Constants {
 
     //DriveTrain
     public static final double joystickDeadband = 0.1;
+    public static final boolean isArcadeDrive = true;
 
     //Shooter
     public static final double highGoalShooterSpeed = 2500;
@@ -23,8 +24,12 @@ public final class Constants {
     public static final double shooterEncoderPulses = 2048;
 
     //Ball Feed
-    public static final double ballFeedSpeed = 0.2;
+    public static final double ballFeedSpeed = 0.4;
 
     //Intake
     public static final double intakeMotorSpeed = 0.2;
+
+    //Climb
+    public static final double upperLeftClimbLimit = 150000;
+    public static final double upperRightClimbLimit = 150000;
 }
