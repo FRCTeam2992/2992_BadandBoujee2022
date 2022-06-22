@@ -5,18 +5,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.TopBallFeed;
+import frc.robot.subsystems.DriveTrain;
 
-public class StartBallFeed extends CommandBase {
+public class SetDriveSpeed extends CommandBase {
 
-  private TopBallFeed mBallFeed;
-  /** Creates a new StartBallFeed. */
-  public StartBallFeed(TopBallFeed subsystem) {
+  DriveTrain mDriveTrain;
 
-    mBallFeed = subsystem;
-
-    addRequirements(mBallFeed);
+  double mSpeed;
+  /** Creates a new SetDriveSpeed. */
+  public SetDriveSpeed(DriveTrain subsystem, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
+    mDriveTrain = subsystem;
+    mSpeed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +26,7 @@ public class StartBallFeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mBallFeed.setFeedMotor(true);
+    mDriveTrain.setMotorSpeed(mSpeed);
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +36,6 @@ public class StartBallFeed extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

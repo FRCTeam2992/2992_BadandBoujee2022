@@ -5,13 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.BallFeed;
+import frc.robot.subsystems.TopBallFeed;
 
 public class StopBallFeed extends CommandBase {
 
-  private BallFeed mBallFeed;
+  private TopBallFeed mBallFeed;
   /** Creates a new StopBallFeed. */
-  public StopBallFeed(BallFeed subsystem) {
+  public StopBallFeed(TopBallFeed subsystem) {
 
     mBallFeed = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.

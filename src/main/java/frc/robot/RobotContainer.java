@@ -6,7 +6,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.ChangeShooterSpeed;
@@ -19,7 +21,8 @@ import frc.robot.commands.StartShooter;
 import frc.robot.commands.StopBallFeed;
 import frc.robot.commands.StopIntake;
 import frc.robot.commands.StopShooter;
-import frc.robot.subsystems.BallFeed;
+import frc.robot.commands.Autonomous.OneBallAuto;
+import frc.robot.subsystems.TopBallFeed;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -42,11 +45,13 @@ public class RobotContainer {
   private final DriveTrain mDriveTrain;
   private final Intake mIntake;
   private final Shooter mShooter;
-  private final BallFeed mBallFeed;
+  private final TopBallFeed mBallFeed;
   public final Climb mClimb;
 
   public XboxController controller1;
   public XboxController controller2;
+
+  private SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
     // Configure the button bindings
@@ -62,7 +67,7 @@ public class RobotContainer {
     mShooter.setDefaultCommand(new StopShooter(mShooter));
     SmartDashboard.putData(mShooter);
 
-    mBallFeed = new BallFeed();
+    mBallFeed = new TopBallFeed();
     mBallFeed.setDefaultCommand(new StopBallFeed(mBallFeed));
     SmartDashboard.putData(mBallFeed);
 
@@ -116,8 +121,20 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
-  //   // An ExampleCommand will run in autonomous
-  //   return m_autoCommand;
-  // }
+
+  private void setupAutoSelector() {
+    // Auto Commands
+    Command oneBallAuto = new OneBallAuto(mShooter, mDriveTrain, mBallFeed);
+    autoChooser = new SendableChooser<>();
+
+    autoChooser.setDefaultOption("Do Nothing", null);
+    autoChooser.addOption("1 Ball Auto", oneBallAuto);
+
+    SmartDashboard.putData("Auto Selector", autoChooser);
+  }
+
+  public Command getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous
+    return autoChooser.getSelected();
+  }
 }

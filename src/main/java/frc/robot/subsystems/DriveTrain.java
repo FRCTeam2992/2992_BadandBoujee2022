@@ -22,29 +22,25 @@ public class DriveTrain extends SubsystemBase {
 
   private Solenoid gearShifter;
 
-  private boolean mGearState = false;
+  private boolean mGearState;
   
   /** Creates a new DriveTrain. */
   public DriveTrain() {
     frontLeftMotor = new CANSparkMax(1, MotorType.kBrushless);
     frontLeftMotor.setIdleMode(IdleMode.kBrake);
     frontLeftMotor.setInverted(false);
-    
+
+
     frontRightMotor = new CANSparkMax(3, MotorType.kBrushless);
     frontRightMotor.setIdleMode(IdleMode.kBrake);
-    frontRightMotor.setInverted(true);
+    frontRightMotor.setInverted(false);
 
     backLeftMotor = new CANSparkMax(2, MotorType.kBrushless);
     backLeftMotor.follow(frontLeftMotor);
-    backLeftMotor.setInverted(false);
-    backLeftMotor.setIdleMode(IdleMode.kBrake);
   
     backRightMotor = new CANSparkMax(4, MotorType.kBrushless);
     backRightMotor.follow(frontRightMotor);
-    backRightMotor.setIdleMode(IdleMode.kBrake);
-    backRightMotor.setInverted(true);
 
-    setVoltageRamping(.75);
 
     gearShifter = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
   
@@ -53,14 +49,6 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-  }
-
-  public void setVoltageRamping(double seconds){
-    frontLeftMotor.setOpenLoopRampRate(seconds);
-    frontRightMotor.setOpenLoopRampRate(seconds);
-    backLeftMotor.setOpenLoopRampRate(seconds);
-    backRightMotor.setOpenLoopRampRate(seconds);
-
   }
 
   public void setTankSpeed(double leftSpeed, double rightSpeed){
@@ -78,7 +66,7 @@ public class DriveTrain extends SubsystemBase {
 
     double max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
 
-    if(max > 1){
+    if(max > 0){
       leftSpeed /= max;
       rightSpeed /= max;
     }

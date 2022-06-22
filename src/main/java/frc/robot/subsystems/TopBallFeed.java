@@ -9,16 +9,22 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class BallFeed extends SubsystemBase {
+public class TopBallFeed extends SubsystemBase {
 
   private TalonSRX feedMotor;
   private boolean feedState;
 
+
+
   /** Creates a new BallFeed. */
-  public BallFeed() {
+  public TopBallFeed() {
     feedMotor = new TalonSRX(7);
     feedMotor.setNeutralMode(NeutralMode.Brake);
     feedMotor.setInverted(false);
@@ -28,6 +34,7 @@ public class BallFeed extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
   }
 
   public void setFeedMotor(boolean feedState) {
@@ -39,7 +46,7 @@ public class BallFeed extends SubsystemBase {
       feedMotor.set(ControlMode.PercentOutput, 0);
     }
   }
-  
+
   public boolean getFeedState(){
     return feedState; 
   }
