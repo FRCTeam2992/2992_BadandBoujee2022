@@ -137,7 +137,7 @@ public class RobotContainer {
     POVButton climbUPButton = new POVButton(controller1, 0);
     climbUPButton.whenHeld(new MoveClimb(mClimb, .5), true);
 
-    POVButton climbDownButton = new POVButton(controller1, 90);
+    POVButton climbDownButton = new POVButton(controller1, 180);
     climbDownButton.whenHeld(new MoveClimb(mClimb, -.5), true);
 
     TriggerButton dejamButton = new TriggerButton(controller1, 0.3, 'l');
