@@ -7,19 +7,21 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.subsystems.BottomBallFeed;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.TopBallFeed;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Dejam extends ParallelCommandGroup {
   /** Creates a new Dejam. */
-  public Dejam(Intake mIntake, BottomBallFeed mBottomBallFeed) {
+  public Dejam(Intake mIntake, BottomBallFeed mBottomBallFeed, TopBallFeed mTopBallFeed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new DeployIntake(mIntake, true),
-      new SpinIntake(mIntake, -0.2),
-      new MoveBottomBallFeed(mBottomBallFeed, -0.2)
+      new SpinIntake(mIntake, -0.75),
+      new MoveBottomBallFeed(mBottomBallFeed, -0.75),
+      new StartBallFeed(mTopBallFeed, -0.75)
     );
   }
 }

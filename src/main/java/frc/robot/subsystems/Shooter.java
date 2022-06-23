@@ -21,7 +21,7 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     shooterMotor = new TalonFX(10);
     shooterMotor.setNeutralMode(NeutralMode.Coast);
-    shooterMotor.setInverted(false);
+    shooterMotor.setInverted(true);
   }
 
   @Override

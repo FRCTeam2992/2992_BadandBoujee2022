@@ -34,10 +34,10 @@ public class DriveSticks extends CommandBase {
       double y1;
       double x2;
 
-      x2 = -Robot.mRobotContainer.controller1.getRawAxis(4);
-      y1 = -Robot.mRobotContainer.controller1.getRawAxis(1);
+      x2 = Robot.mRobotContainer.controller0.getRawAxis(1);
+      y1 = Robot.mRobotContainer.controller0.getRawAxis(4);
 
-      if (Robot.mRobotContainer.controller1.getRightBumper()) {
+      if (Robot.mRobotContainer.controller0.getRightBumper()) {
         mDriveTrain.setGearState(true);
       } else {
         mDriveTrain.setGearState(false);

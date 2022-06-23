@@ -18,7 +18,7 @@ public class Shoot extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new StartShooter(mShooter),
-      new StartBallFeed(mBallFeed, 0.2)
+      new StartBallFeed(mBallFeed, 0.5)
     );
   }
 }

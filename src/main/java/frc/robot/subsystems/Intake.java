@@ -7,6 +7,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -14,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
 
-  private VictorSPX intakeMotor;
+  private CANSparkMax intakeMotor;
 
   private Solenoid intakeDeploySolenoid;
 
@@ -22,9 +25,9 @@ public class Intake extends SubsystemBase {
   public boolean intakeDeployed = false;
   /** Creates a new Intake. */
   public Intake() {
-    intakeMotor = new VictorSPX(6);
+    intakeMotor = new CANSparkMax(6, MotorType.kBrushless);
     intakeMotor.setInverted(false);
-    intakeMotor.setNeutralMode(NeutralMode.Coast);
+    intakeMotor.setIdleMode(IdleMode.kCoast);
 
     intakeDeploySolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
   }
@@ -35,7 +38,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void setIntakeSpeed(double speed) {
-    intakeMotor.set(ControlMode.PercentOutput, speed);
+    intakeMotor.set(speed);
   }
 
   public void deployIntake(boolean toggle) {

@@ -55,7 +55,7 @@ public class RobotContainer {
   private final DriveTrain mDriveTrain;
   private final Intake mIntake;
   private final Shooter mShooter;
-  private final TopBallFeed mBallFeed;
+  private final TopBallFeed mTopBallFeed;
   public final Climb mClimb;
   public final BottomBallFeed mBottomBallFeed;
 
@@ -78,9 +78,9 @@ public class RobotContainer {
     mShooter.setDefaultCommand(new StopShooter(mShooter));
     SmartDashboard.putData(mShooter);
 
-    mBallFeed = new TopBallFeed();
-    mBallFeed.setDefaultCommand(new StopBallFeed(mBallFeed));
-    SmartDashboard.putData(mBallFeed);
+    mTopBallFeed = new TopBallFeed();
+    mTopBallFeed.setDefaultCommand(new StopBallFeed(mTopBallFeed));
+    SmartDashboard.putData(mTopBallFeed);
 
     mClimb = new Climb();
     mClimb.setDefaultCommand(new ClimbSticks(mClimb));
@@ -107,8 +107,8 @@ public class RobotContainer {
     SmartDashboard.putData("Retract Intake", new DeployIntake(mIntake, false));
 
 
-    SmartDashboard.putData("Start BallFeed", new StartBallFeed(mBallFeed, 0.2));
-    SmartDashboard.putData("Stop BallFeed", new StopBallFeed(mBallFeed));
+    SmartDashboard.putData("Start BallFeed", new StartBallFeed(mTopBallFeed, 0.2));
+    SmartDashboard.putData("Stop BallFeed", new StopBallFeed(mTopBallFeed));
   
 
     SmartDashboard.putData("Start Shooter", new StartShooter(mShooter));
@@ -121,10 +121,10 @@ public class RobotContainer {
 
 
     //Controller 0
-    JoystickButton autoIntakeButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
+    JoystickButton autoIntakeButton = new JoystickButton(controller0, XboxController.Button.kA.value);
     autoIntakeButton.whenPressed(new AutoIntake(mIntake, mBottomBallFeed));
     
-    JoystickButton stopAutoIntakeButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
+    JoystickButton stopAutoIntakeButton = new JoystickButton(controller0, XboxController.Button.kB.value);
     stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mBottomBallFeed));
 
     JoystickButton toggleAutoIntakeButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
@@ -141,10 +141,10 @@ public class RobotContainer {
     climbDownButton.whenHeld(new MoveClimb(mClimb, -.5), true);
 
     TriggerButton dejamButton = new TriggerButton(controller1, 0.3, 'l');
-    dejamButton.whenActive(new Dejam(mIntake, mBottomBallFeed));
+    dejamButton.whenActive(new Dejam(mIntake, mBottomBallFeed, mTopBallFeed));
 
     TriggerButton shootButton = new TriggerButton(controller1, 0.3, 'r');
-    shootButton.whenActive(new Shoot(mShooter, mBallFeed));
+    shootButton.whenActive(new Shoot(mShooter, mTopBallFeed));
 
     JoystickButton startShooterButton = new JoystickButton(controller1, XboxController.Button.kX.value);
     startShooterButton.whenPressed(new StartShooter(mShooter));
@@ -170,7 +170,7 @@ public class RobotContainer {
 
   private void setupAutoSelector() {
     // Auto Commands
-    Command oneBallAuto = new OneBallAuto(mShooter, mDriveTrain, mBallFeed);
+    Command oneBallAuto = new OneBallAuto(mShooter, mDriveTrain, mTopBallFeed);
     autoChooser = new SendableChooser<>();
 
     autoChooser.setDefaultOption("Do Nothing", null);

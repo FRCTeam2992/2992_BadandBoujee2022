@@ -19,7 +19,7 @@ public final class Constants {
     public static final boolean isArcadeDrive = true;
 
     //Shooter
-    public static final double highGoalShooterSpeed = 2000;
+    public static final double highGoalShooterSpeed = 3000;
     public static final double lowGoalShooterSpeed = 1000;
     public static final double shooterEncoderPulses = 2048;
 
