@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -18,10 +19,10 @@ public class BottomBallFeed extends SubsystemBase {
 
   private TalonSRX funnelMotor;
 
-  private DigitalInput liftSensor;
-  private Debouncer sensorDebouncer;
+  // private DigitalInput liftSensor;
+  // private Debouncer sensorDebouncer;
   
-  public boolean sensorState;
+  // public boolean sensorState;
   /** Creates a new BottomBallFeed. */
   public BottomBallFeed() {
 
@@ -29,20 +30,20 @@ public class BottomBallFeed extends SubsystemBase {
     funnelMotor.setNeutralMode(NeutralMode.Brake);
     funnelMotor.setInverted(false);
 
-    liftSensor = new DigitalInput(0);
+    // liftSensor = new DigitalInput(0);
 
-    sensorDebouncer = new Debouncer(.1, DebounceType.kFalling);
+    // sensorDebouncer = new Debouncer(.1, DebounceType.kFalling);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
 
-    SmartDashboard.putBoolean("Ball Feed sensor", sensorState);
+    // SmartDashboard.putBoolean("Ball Feed sensor", sensorState);
 
   }
 
-  public void setFeedSpeed(){
-    if ()
+  public void setFeedSpeed(double speed){
+    funnelMotor.set(ControlMode.PercentOutput, speed);
   }
 }

@@ -10,10 +10,13 @@ import frc.robot.subsystems.TopBallFeed;
 public class StartBallFeed extends CommandBase {
 
   private TopBallFeed mBallFeed;
+  private double mSpeed;
   /** Creates a new StartBallFeed. */
-  public StartBallFeed(TopBallFeed subsystem) {
+  public StartBallFeed(TopBallFeed subsystem, double speed) {
 
     mBallFeed = subsystem;
+
+    mSpeed = speed;
 
     addRequirements(mBallFeed);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -26,7 +29,7 @@ public class StartBallFeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mBallFeed.setFeedMotor(true);
+    mBallFeed.setFeedMotor(mSpeed);
   }
 
   // Called once the command ends or is interrupted.

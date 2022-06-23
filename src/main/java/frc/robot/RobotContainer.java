@@ -11,18 +11,28 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.lib.oi.controller.TriggerButton;
+import frc.robot.commands.AutoIntake;
 import frc.robot.commands.ChangeShooterSpeed;
 import frc.robot.commands.ClimbSticks;
+import frc.robot.commands.Dejam;
 import frc.robot.commands.DeployIntake;
 import frc.robot.commands.DriveSticks;
 import frc.robot.commands.MoveClimb;
+import frc.robot.commands.PanicIntake;
+import frc.robot.commands.SetHighGoalShooter;
+import frc.robot.commands.SetLowGoalShooter;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.StartBallFeed;
 import frc.robot.commands.StartShooter;
+import frc.robot.commands.StopAutoIntake;
 import frc.robot.commands.StopBallFeed;
+import frc.robot.commands.StopBottomBallFeed;
 import frc.robot.commands.StopIntake;
 import frc.robot.commands.StopShooter;
 import frc.robot.commands.Autonomous.OneBallAuto;
 import frc.robot.subsystems.TopBallFeed;
+import frc.robot.subsystems.BottomBallFeed;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -47,9 +57,10 @@ public class RobotContainer {
   private final Shooter mShooter;
   private final TopBallFeed mBallFeed;
   public final Climb mClimb;
+  public final BottomBallFeed mBottomBallFeed;
 
   public XboxController controller1;
-  public XboxController controller2;
+  public XboxController controller0;
 
   private SendableChooser<Command> autoChooser;
 
@@ -75,8 +86,11 @@ public class RobotContainer {
     mClimb.setDefaultCommand(new ClimbSticks(mClimb));
     SmartDashboard.putData(mClimb);
 
-    controller1 = new XboxController(0);
-    controller2 = new XboxController(1);
+    mBottomBallFeed = new BottomBallFeed();
+    mBottomBallFeed.setDefaultCommand(new StopBottomBallFeed(mBottomBallFeed));
+
+    controller0 = new XboxController(0);
+    controller1 = new XboxController(1);
 
     configureButtonBindings();
   }
@@ -93,7 +107,7 @@ public class RobotContainer {
     SmartDashboard.putData("Retract Intake", new DeployIntake(mIntake, false));
 
 
-    SmartDashboard.putData("Start BallFeed", new StartBallFeed(mBallFeed));
+    SmartDashboard.putData("Start BallFeed", new StartBallFeed(mBallFeed, 0.2));
     SmartDashboard.putData("Stop BallFeed", new StopBallFeed(mBallFeed));
   
 
@@ -106,12 +120,44 @@ public class RobotContainer {
     SmartDashboard.putData("200 Decrease Shooter RPM", new ChangeShooterSpeed(mShooter, -200));
 
 
+    //Controller 0
+    JoystickButton autoIntakeButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
+    autoIntakeButton.whenPressed(new AutoIntake(mIntake, mBottomBallFeed));
+    
+    JoystickButton stopAutoIntakeButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
+    stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mBottomBallFeed));
 
+    JoystickButton toggleAutoIntakeButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
+    toggleAutoIntakeButton.whenPressed(new PanicIntake(mIntake, mBottomBallFeed, mIntake.getIntakeSolenoid()));
+
+
+    
+
+    // Controller 1
     POVButton climbUPButton = new POVButton(controller1, 0);
     climbUPButton.whenHeld(new MoveClimb(mClimb, .5), true);
 
     POVButton climbDownButton = new POVButton(controller1, 90);
     climbDownButton.whenHeld(new MoveClimb(mClimb, -.5), true);
+
+    TriggerButton dejamButton = new TriggerButton(controller1, 0.3, 'l');
+    dejamButton.whenActive(new Dejam(mIntake, mBottomBallFeed));
+
+    TriggerButton shootButton = new TriggerButton(controller1, 0.3, 'r');
+    shootButton.whenActive(new Shoot(mShooter, mBallFeed));
+
+    JoystickButton startShooterButton = new JoystickButton(controller1, XboxController.Button.kX.value);
+    startShooterButton.whenPressed(new StartShooter(mShooter));
+
+    JoystickButton stopShooterButton = new JoystickButton(controller1, XboxController.Button.kY.value);
+    stopShooterButton.whenPressed(new StopShooter(mShooter));
+
+    JoystickButton setLowGoalButton = new JoystickButton(controller1, XboxController.Button.kLeftBumper.value);
+    setLowGoalButton.whenPressed(new SetLowGoalShooter(mShooter));
+
+    JoystickButton setHighGoalButton = new JoystickButton(controller1, XboxController.Button.kRightBumper.value);
+    setHighGoalButton.whenPressed(new SetHighGoalShooter(mShooter));
+
 
     
   }

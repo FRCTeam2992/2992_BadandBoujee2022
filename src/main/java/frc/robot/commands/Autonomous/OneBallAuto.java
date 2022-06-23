@@ -25,7 +25,7 @@ public class OneBallAuto extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new StartShooter(mShooter).withTimeout(3),
-      new StartBallFeed(mBallFeed).withTimeout(2),
+      new StartBallFeed(mBallFeed, 0.2).withTimeout(2),
       new StopBallFeed(mBallFeed).withTimeout(1),
       new StopShooter(mShooter),
       new SetDriveSpeed(mDriveTrain, -0.3).withTimeout(2),

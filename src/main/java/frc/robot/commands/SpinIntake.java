@@ -8,16 +8,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
-public class StartIntake extends CommandBase {
+public class SpinIntake extends CommandBase {
 
 
   private Intake mIntake;
+  private double mSpeed;
   /** Creates a new StartIntake. */
-  public StartIntake(Intake subsystem) {
+  public SpinIntake(Intake subsystem, double speed) {
 
     mIntake = subsystem;
-
     addRequirements(mIntake);
+
+    mSpeed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -28,7 +30,7 @@ public class StartIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mIntake.setIntakeSpeed(Constants.intakeMotorSpeed);
+    mIntake.setIntakeSpeed(mSpeed);
   }
 
   // Called once the command ends or is interrupted.

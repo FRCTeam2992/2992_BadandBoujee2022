@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.subsystems.BottomBallFeed;
 import frc.robot.subsystems.Intake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -12,13 +13,14 @@ import frc.robot.subsystems.Intake;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class StopAutoIntake extends ParallelCommandGroup {
   /** Creates a new StopAutoIntake. */
-  public StopAutoIntake(Intake mIntake) {
+  public StopAutoIntake(Intake mIntake, BottomBallFeed mBottomBallFeed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ParallelCommandGroup(
         new DeployIntake(mIntake, false),
-        new StopIntake(mIntake)
+        new StopIntake(mIntake),
+        new StopBottomBallFeed(mBottomBallFeed)
       )
     );
   }

@@ -19,7 +19,6 @@ import frc.robot.Constants;
 public class TopBallFeed extends SubsystemBase {
 
   private TalonSRX feedMotor;
-  private boolean feedState;
 
 
 
@@ -37,17 +36,9 @@ public class TopBallFeed extends SubsystemBase {
 
   }
 
-  public void setFeedMotor(boolean feedState) {
-    feedState = feedState;
+  public void setFeedMotor(double speed) {
 
-    if (feedState){
-      feedMotor.set(ControlMode.PercentOutput, Constants.ballFeedSpeed);
-    } else{
-      feedMotor.set(ControlMode.PercentOutput, 0);
-    }
+      feedMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public boolean getFeedState(){
-    return feedState; 
-  }
 }

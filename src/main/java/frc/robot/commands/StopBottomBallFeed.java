@@ -5,27 +5,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.BottomBallFeed;
 
-public class MoveIntake extends CommandBase {
+public class StopBottomBallFeed extends CommandBase {
+  
+  private BottomBallFeed mBottomBallFeed;
 
-  // Subsystem Instance
-  private Intake mIntake;
+  /** Creates a new StopBottomBallFeed. */
+  public StopBottomBallFeed(BottomBallFeed subsystem) {
 
-  // Saved Variables
-  private double mIntakeSpeed;
-
-  /** Creates a new MoveIntake. */
-  public MoveIntake(Intake subsystem, double IntakeSpeed) {
+    mBottomBallFeed = subsystem;
+    addRequirements(mBottomBallFeed);
     // Use addRequirements() here to declare subsystem dependencies.
-    // Subsystem Instance
-    mIntake = subsystem;
-
-    // Set the Subsystem Requirements
-    addRequirements(mIntake);
-
-    // Saved Variables
-    mIntakeSpeed = IntakeSpeed;
   }
 
   // Called when the command is initially scheduled.
@@ -35,7 +26,7 @@ public class MoveIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mIntake.setIntakeSpeed(mIntakeSpeed);
+    mBottomBallFeed.setFeedSpeed(0.0);
   }
 
   // Called once the command ends or is interrupted.

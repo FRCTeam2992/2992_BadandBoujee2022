@@ -11,17 +11,15 @@ import frc.robot.subsystems.Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoIntake extends ParallelCommandGroup {
-  /** Creates a new AutoIntake. */
-  public AutoIntake(Intake mIntake, BottomBallFeed mBottomBallFeed) {
+public class Dejam extends ParallelCommandGroup {
+  /** Creates a new Dejam. */
+  public Dejam(Intake mIntake, BottomBallFeed mBottomBallFeed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ParallelCommandGroup(
-        new DeployIntake(mIntake, true),
-        new SpinIntake(mIntake, 0.2),
-        new MoveBottomBallFeed(mBottomBallFeed, 0.2)
-      )
+      new DeployIntake(mIntake, true),
+      new SpinIntake(mIntake, -0.2),
+      new MoveBottomBallFeed(mBottomBallFeed, -0.2)
     );
   }
 }

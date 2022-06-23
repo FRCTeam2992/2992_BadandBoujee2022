@@ -83,5 +83,10 @@ public class DriveTrain extends SubsystemBase {
   public boolean getGearState(){
     return mGearState;
   }
+
+  public void setMotorSpeed(double speed){
+    frontLeftMotor.set(speed);
+    frontRightMotor.set(speed);
+  }
   
 }
