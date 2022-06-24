@@ -15,11 +15,11 @@ package frc.robot;
 public final class Constants {
 
     //DriveTrain
-    public static final double joystickDeadband = 0.1;
+    public static final double joystickDeadband = 0.2;
     public static final boolean isArcadeDrive = true;
 
     //Shooter
-    public static final double highGoalShooterSpeed = 3000;
+    public static final double highGoalShooterSpeed = 2500;
     public static final double lowGoalShooterSpeed = 1000;
     public static final double shooterEncoderPulses = 2048;
 

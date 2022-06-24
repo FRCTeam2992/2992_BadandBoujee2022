@@ -25,7 +25,13 @@ public class PanicIntake extends CommandBase {
     mBottomBallFeed = bottomBallFeed;
     mIntakeState = intakeState;
 
+    addRequirements(mIntake);
+    addRequirements(mBottomBallFeed);
+
   }
+
+  @Override
+  public void initialize() {}
 
   @Override
   public void execute() {

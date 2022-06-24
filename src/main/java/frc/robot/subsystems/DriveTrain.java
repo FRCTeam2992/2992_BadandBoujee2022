@@ -41,6 +41,8 @@ public class DriveTrain extends SubsystemBase {
     backRightMotor = new CANSparkMax(4, MotorType.kBrushless);
     backRightMotor.follow(frontRightMotor);
 
+    // setDriveRampRates(.5);s
+
 
     gearShifter = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
   
@@ -55,6 +57,7 @@ public class DriveTrain extends SubsystemBase {
     leftSpeed = Math.max(-1, Math.min(leftSpeed, 1));
     rightSpeed = Math.max(-1, Math.min(rightSpeed, 1));
 
+
     frontLeftMotor.set(leftSpeed);
     frontRightMotor.set(rightSpeed);
   }
@@ -66,7 +69,7 @@ public class DriveTrain extends SubsystemBase {
 
     double max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
 
-    if(max > 0){
+    if(max > 1){
       leftSpeed /= max;
       rightSpeed /= max;
     }
@@ -87,6 +90,18 @@ public class DriveTrain extends SubsystemBase {
   public void setMotorSpeed(double speed){
     frontLeftMotor.set(speed);
     frontRightMotor.set(speed);
+  }
+
+  public void setDriveRampRates(double seconds){
+    frontLeftMotor.setOpenLoopRampRate(seconds);
+    frontRightMotor.setOpenLoopRampRate(seconds);
+    backLeftMotor.setOpenLoopRampRate(seconds);
+    backRightMotor.setOpenLoopRampRate(seconds);
+
+    frontLeftMotor.setClosedLoopRampRate(seconds);
+    frontRightMotor.setClosedLoopRampRate(seconds);
+    backLeftMotor.setClosedLoopRampRate(seconds);
+    backRightMotor.setClosedLoopRampRate(seconds);
   }
   
 }

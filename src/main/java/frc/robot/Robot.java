@@ -60,9 +60,15 @@ public class Robot extends TimedRobot {
     // m_autonomousCommand = mRobotContainer.getAutonomousCommand();
 
     // // schedule the autonomous command (example)
-    // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.schedule();
-    // }
+
+    mRobotContainer.mDriveTrain.setDriveRampRates(.5);
+
+    m_autonomousCommand = mRobotContainer.getAutonomousCommand();
+
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
+
   }
 
   /** This function is called periodically during autonomous. */
@@ -78,6 +84,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    mRobotContainer.mDriveTrain.setDriveRampRates(.5);
   }
 
   /** This function is called periodically during operator control. */

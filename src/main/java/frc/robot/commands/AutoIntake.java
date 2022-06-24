@@ -20,7 +20,7 @@ public class AutoIntake extends ParallelCommandGroup {
       new ParallelCommandGroup(
         new DeployIntake(mIntake, true),
         new SpinIntake(mIntake, 0.75),
-        new MoveBottomBallFeed(mBottomBallFeed, 0.75)
+        new MoveBottomBallFeed(mBottomBallFeed, 0.5)
       )
     );
   }

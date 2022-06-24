@@ -36,7 +36,7 @@ public class Climb extends SubsystemBase {
   }
 
   public void setClimbSpeed(double speed) {
-    speed = Math.min(0.7, Math.max(-0.7, speed));
+    speed = Math.min(1, Math.max(-1, speed));
     if ((leftClimbMotor.getSelectedSensorPosition() > Constants.upperLeftClimbLimit) && (speed > 0)) {
       leftClimbMotor.set(ControlMode.PercentOutput, 0);
     } else if((leftClimbMotor.getSelectedSensorPosition() < 2000) && (speed < 0)){

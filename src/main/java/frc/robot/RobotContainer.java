@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.lib.oi.controller.TriggerButton;
 import frc.robot.commands.AutoIntake;
+import frc.robot.commands.AutoPanicIntake;
 import frc.robot.commands.ChangeShooterSpeed;
 import frc.robot.commands.ClimbSticks;
 import frc.robot.commands.Dejam;
@@ -52,7 +53,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
-  private final DriveTrain mDriveTrain;
+  public final DriveTrain mDriveTrain;
   private final Intake mIntake;
   private final Shooter mShooter;
   private final TopBallFeed mTopBallFeed;
@@ -93,6 +94,7 @@ public class RobotContainer {
     controller1 = new XboxController(1);
 
     configureButtonBindings();
+    setupAutoSelector();
   }
 
   /**
@@ -128,7 +130,8 @@ public class RobotContainer {
     stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mBottomBallFeed));
 
     JoystickButton toggleAutoIntakeButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
-    toggleAutoIntakeButton.whenPressed(new PanicIntake(mIntake, mBottomBallFeed, mIntake.getIntakeSolenoid()));
+    toggleAutoIntakeButton.whileHeld(new AutoPanicIntake(mIntake, mBottomBallFeed, mIntake.getIntakeSolenoid()));
+    toggleAutoIntakeButton.whenReleased(new DeployIntake(mIntake, false));
 
 
     
@@ -141,10 +144,10 @@ public class RobotContainer {
     climbDownButton.whenHeld(new MoveClimb(mClimb, -.5), true);
 
     TriggerButton dejamButton = new TriggerButton(controller1, 0.3, 'l');
-    dejamButton.whenActive(new Dejam(mIntake, mBottomBallFeed, mTopBallFeed));
+    dejamButton.whileActiveContinuous(new Dejam(mIntake, mBottomBallFeed, mTopBallFeed));
 
     TriggerButton shootButton = new TriggerButton(controller1, 0.3, 'r');
-    shootButton.whenActive(new Shoot(mShooter, mTopBallFeed));
+    shootButton.whileActiveContinuous(new Shoot(mIntake, mTopBallFeed, mBottomBallFeed));
 
     JoystickButton startShooterButton = new JoystickButton(controller1, XboxController.Button.kX.value);
     startShooterButton.whenPressed(new StartShooter(mShooter));
@@ -176,7 +179,7 @@ public class RobotContainer {
     autoChooser.setDefaultOption("Do Nothing", null);
     autoChooser.addOption("1 Ball Auto", oneBallAuto);
 
-    SmartDashboard.putData("Auto Selector", autoChooser);
+    SmartDashboard.putData("AutoSelector", autoChooser);
   }
 
   public Command getAutonomousCommand() {

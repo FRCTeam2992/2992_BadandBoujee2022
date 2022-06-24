@@ -23,12 +23,12 @@ public class OneBallAuto extends SequentialCommandGroup {
   public OneBallAuto(Shooter mShooter, DriveTrain mDriveTrain, TopBallFeed mBallFeed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+    
     addCommands(
+      new WaitCommand(6),
       new StartShooter(mShooter).withTimeout(3),
-      new StartBallFeed(mBallFeed, 0.2).withTimeout(2),
-      new StopBallFeed(mBallFeed).withTimeout(1),
-      new StopShooter(mShooter),
-      new SetDriveSpeed(mDriveTrain, -0.3).withTimeout(2),
+      new StartBallFeed(mBallFeed, 0.5).withTimeout(1),
+      new SetDriveSpeed(mDriveTrain, -0.5).withTimeout(2.5),
       new SetDriveSpeed(mDriveTrain, 0)
     );
   }

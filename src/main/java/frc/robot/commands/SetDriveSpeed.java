@@ -16,6 +16,7 @@ public class SetDriveSpeed extends CommandBase {
   public SetDriveSpeed(DriveTrain subsystem, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     mDriveTrain = subsystem;
+    addRequirements(mDriveTrain);
     mSpeed = speed;
   }
 
@@ -26,7 +27,7 @@ public class SetDriveSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mDriveTrain.setMotorSpeed(mSpeed);
+    mDriveTrain.setTankSpeed(mSpeed, -mSpeed);
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +37,6 @@ public class SetDriveSpeed extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

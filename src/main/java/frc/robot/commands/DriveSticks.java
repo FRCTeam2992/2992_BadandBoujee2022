@@ -53,6 +53,8 @@ public class DriveSticks extends CommandBase {
       x2 = Math.pow(x2, 3);
       y1 = Math.pow(y1, 3);
 
+      y1 *= 0.75;
+
       mDriveTrain.setArcadeSpeed(y1, x2);
 
 
